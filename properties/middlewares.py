@@ -39,12 +39,14 @@ class PropertiesSpiderMiddleware(object):
                     for i in range(len(item['size'])):
                         yield {
                             'size': item['size'][i],
-                            'price': item['price'][i]
+                            'price': item['price'][i],
+                            'location': item['location']
                         }
                 else:
                     yield {
                         'size': item['size'][0],
-                        'price': item['price'][0]
+                        'price': item['price'][0],
+                        'location': item['location']
                     }
 
             except TypeError:
