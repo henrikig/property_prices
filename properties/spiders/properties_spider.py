@@ -12,7 +12,12 @@ class PropertiesSpider(scrapy.Spider):
     def parse(self, response):
         for unit in response.css('div.ads__unit__content__keys'):
             keys = unit.css('*::text').getall()
-            yield {
-                'size': keys[0],
-                'price': keys[1]
-            }
+            if len(keys) > 1:
+                yield {
+                    'size': keys[0],
+                    'price': keys[1]
+                }
+
+        for a in response.css('a.button--icon-right'):
+            print('RESPONSE: ', a)
+            yield response.follow(a, callback=self.parse)
