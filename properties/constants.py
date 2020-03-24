@@ -11,4 +11,5 @@ LOCATIONS = {
     '&location=0.22038': 'Vestfold og Telemark',
     '&location=0.22046': 'Vestland',
     '&location=0.22030': 'Viken',
+    '&published=1': 'Ny i dag',
 }

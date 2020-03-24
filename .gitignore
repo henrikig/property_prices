@@ -3,3 +3,5 @@ properties.jl
 properties.csv
 
 properties.json
+
+price_history.jl
