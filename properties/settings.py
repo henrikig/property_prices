@@ -22,7 +22,7 @@ NEWSPIDER_MODULE = 'properties.spiders'
 ROBOTSTXT_OBEY = True
 
 # Set depth limit
-DEPTH_LIMIT = 0
+DEPTH_LIMIT = 2
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
