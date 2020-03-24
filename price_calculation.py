@@ -30,6 +30,12 @@ for location, data in price_data.items():
     price_per_sqm = int(data[0] / data[1])
     price_data[location].append(price_per_sqm)
 
+total = [0, 0]
+for data in price_data.values():
+    total[0] += data[0]
+    total[1] += data[1]
+avg_price = int(total[0] / total[1])
+
 price_data = {k: v for k, v in sorted(price_data.items(), key=lambda item: item[1][3], reverse=True)}
 
 sep_line = 60*"-"
@@ -39,6 +45,11 @@ print(sep_line)
 
 for location, data in price_data.items():
     print(f'{location:<30} kr {"{:,}".format(data[3]).replace(",", " ")}')
+
+
+print(sep_line)
+print(f'{"Gjennomsnittspris":<30} kr {"{:,}".format(avg_price).replace(",", " ")}')
+
 
 
 
