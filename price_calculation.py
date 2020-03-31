@@ -41,6 +41,8 @@ avg_price = int(total[0] / total[1])
 
 # Sort price data based on average price per square meter highest to lowest
 price_data = {k: v for k, v in sorted(price_data.items(), key=lambda item: item[1][3], reverse=True)}
+# Add average price for later use
+price_data["Gjennomsnittspris"] = avg_price
 
 
 # Print counties and belonging square meter prices
@@ -49,6 +51,8 @@ print(f'{"Fylke": <30} Kvadratmeterpris')
 print(sep_line)
 
 for location, data in price_data.items():
+    if location == "Gjennomsnittspris":
+        continue
     print(f'{location:<30} kr {"{:,}".format(data[3]).replace(",", " ")}')
 
 
