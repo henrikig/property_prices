@@ -13,3 +13,19 @@ LOCATIONS = {
     '&location=0.22030': 'Viken',
     '&published=1': 'Ny i dag',
 }
+
+PRICE_DATA = {
+    'Agder': [0, 0, 0],
+    'Innlandet': [0, 0, 0],
+    'Moere og Romsdal': [0, 0, 0],
+    'Nordland': [0, 0, 0],
+    'Oslo': [0, 0, 0],
+    'Rogaland': [0, 0, 0],
+    'Svalbard': [0, 0, 0],
+    'Troms og Finnmark': [0, 0, 0],
+    'Troendelag': [0, 0, 0],
+    'Vestfold og Telemark': [0, 0, 0],
+    'Vestland': [0, 0, 0],
+    'Viken': [0, 0, 0],
+    'Ny i dag': [0, 0, 0],
+}
