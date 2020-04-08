@@ -19,3 +19,6 @@ Web scraper for collecting properties from finn.no and analysing prices using sc
 ```
 scrapy crawl properties -o properties.json && python3 trends.py
 ```
+
+### Example Output
+![](images/output.png)
