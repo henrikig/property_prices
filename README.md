@@ -1,7 +1,7 @@
 # property_prices
 Web scraper for collecting properties from finn.no and analysing prices using scrapy
 
-### Program Flow
+## Program Flow
 
 - [x] Gather property data from Finn using Scrapy
 - [x] Store in JSON-file
@@ -12,3 +12,10 @@ Web scraper for collecting properties from finn.no and analysing prices using sc
 - [x] Compare todays data with yesterday, week, month and potentially year
 - [ ] Send report through email
 - [ ] Schedule daily data gathering with crontab
+
+
+## Running the script
+
+```
+scrapy crawl properties -o properties.json && python3 trends.py
+```
