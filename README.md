@@ -10,14 +10,23 @@ Web scraper for collecting properties from finn.no and analysing prices using sc
 - [x] Store location specific data for each date - JSONLines? CSV?
 - [x] Extract data by date for analysis
 - [x] Compare todays data with yesterday, week, month and potentially year
+- [x] Schedule daily data gathering with crontab
 - [ ] Send report through email
-- [ ] Schedule daily data gathering with crontab
+
 
 
 ## Running the script
 
+The script uses the [Scrapy](https://docs.scrapy.org/en/latest/index.html) web scraper framework. 
+A Python virtualenv is recommended when installing Scrapy.
+
 ```
-scrapy crawl properties -o properties.json && python3 trends.py
+pip3 install scrapy
+```
+
+The web scraper is run by the following command:
+```
+python3 trends.py
 ```
 
 ### Example Output
