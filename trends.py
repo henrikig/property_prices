@@ -1,6 +1,11 @@
 import json
 from datetime import date, timedelta
+import scrapy
+from scrapy.crawler import CrawlerProcess
 from properties.constants import PRICE_DATA
+from properties.spiders.properties_spider import PropertiesSpider
+from scrapy.utils.project import get_project_settings
+import time
 
 JSON_FILE = "properties.json"
 HISTORY_DATA = "price_history.jl"
@@ -116,11 +121,24 @@ def _format_number(percent):
 
 
 if __name__ == "__main__":
+    # Delete yesterday's listings
+    with open(JSON_FILE, "w") as f:
+        f.write("")
+
+    # Run properties spider
+    settings = get_project_settings()
+    settings['FEED_FORMAT'] = "json"
+    settings['FEED_URI'] = JSON_FILE
+    process = CrawlerProcess(settings)
+    process.crawl(PropertiesSpider)
+    process.start()
+
+    # Calculate prices on today's data and save to history file
     price_data = load_json(JSON_FILE, PRICE_DATA)
     price_data = calculate_prices(price_data)
-
     save_data(price_data, HISTORY_DATA)
 
+    # Calculate trends
     history_data = extract_history(HISTORY_DATA)
     history_data = dict_from_list(history_data)
     days_data = [data_from_date(history_data, 0), data_from_date(history_data, 1),
