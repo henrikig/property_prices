@@ -5,3 +5,7 @@ properties.json
 price_history.jl
 
 credentials.py
+
+error_log.txt
+
+current_data.txt

@@ -25,18 +25,9 @@ def send_email(subject, msg):
             f.write(str(e) + "\n")
 
 
-
 if __name__ == "__main__":
     with open("current_data.txt", "r") as f:
         msg = f.read()
 
     subject = f'Boligpriser {str(date.today())}'
-    with open("error_log.txt", "a+") as f:
-        f.write(subject + "\n")
-        f.write(msg + "\n")
     send_email(subject, msg)
-
-
-
-
-
