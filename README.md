@@ -11,7 +11,7 @@ Web scraper for collecting properties from finn.no and analysing prices using sc
 - [x] Extract data by date for analysis
 - [x] Compare todays data with yesterday, week, month and potentially year
 - [x] Schedule daily data gathering with crontab
-- [ ] Send report through email
+- [x] Send report through email
 
 
 
