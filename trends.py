@@ -146,23 +146,25 @@ if __name__ == "__main__":
     trend_data = trends_analysis(days_data)
 
     # Print counties and price changes
-    sep_line = 89 * "-"
-    print(f'{"Fylke": <30} {"Kvadratmeterpris": <20} {"Day": <15} {"Week": <15} {"Month": <12}')
-    print(sep_line)
+    sep_line = 150 * "-" + "\n"
+    s = f'{"Fylke": <50} {"Kvadratmeterpris": <30} {"Day": <25} {"Week": <25} {"Month": <15}\n'
+    s += sep_line
 
     for location, data in trend_data.items():
         if location == "Gjennomsnittspris":
             continue
-        f_str = f'{location:<30} kr {"{:,}".format(data[0]).replace(",", " "): <17}'
+        s += f'{location:<50} kr {"{:,}".format(data[0]).replace(",", " "): <25}'
         for i in range(1, len(data)):
             data[i] = _format_number(data[i])
-            f_str += f'{data[i]: <15}'
+            s += f'{data[i]: <25}'
+        s += "\n"
 
-        print(f_str)
-
-    print(sep_line)
-    avg_str = f'{"Gjennomsnittspris":<30} kr {"{:,}".format(trend_data["Gjennomsnittspris"][0]).replace(",", " "): <17}'
+    s += sep_line
+    s += f'{"Gjennomsnittspris":<50} kr {"{:,}".format(trend_data["Gjennomsnittspris"][0]).replace(",", " "): <25}'
     for data in trend_data["Gjennomsnittspris"][1:]:
-        avg_str += f'{_format_number(data): <15}'
+        s += f'{_format_number(data): <25}'
 
-    print(avg_str)
+    print(s)
+
+    with open("current_data.txt", "w") as f:
+        f.write(s)

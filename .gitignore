@@ -3,3 +3,5 @@ properties.csv
 properties.json
 
 price_history.jl
+
+credentials.py
