@@ -8,7 +8,7 @@ from scrapy.utils.project import get_project_settings
 import time
 
 JSON_FILE = "properties.json"
-HISTORY_DATA = "price_history.jl"
+HISTORY_FILE = "price_history.json"
 
 
 # Load JSON-file with properties and return calculated totals
@@ -56,29 +56,21 @@ def print_locations(location_list):
     print(f'{"Gjennomsnittspris":<30} kr {"{:,}".format(location_list["Gjennomsnittspris"]).replace(",", " ")}')
 
 
-# {"2020-03-24": {"Oslo": [total_price, total_sqms, num_listings, sqm_price]...}}
-def save_data(price_data, output_file):
-    today = date.today()
-    today_data = {str(today): price_data}
-
-    with open(output_file, "a+") as price_file:
-        data = json.dumps(today_data)
-        price_file.write(data + "\n")
-
-
-# Extract data from JSON lines history file
+# Extract data from JSON history file
 def extract_history(filename):
-    data = []
     # Extract data from price history file
     with open(filename, 'r') as f:
-        for line in f:
-            data.append(json.loads(line))
-    return data
+        return json.load(f)
 
 
-# Reformat list of dates to dict of dates
-def dict_from_list(data_list):
-    return {list(item.keys())[0]: list(item.values())[0] for item in data_list}
+# {"2020-03-24": {"Oslo": [total_price, total_sqms, num_listings, sqm_price]...}}
+def save_data(today_data, history_data, output_file):
+    today = str(date.today())
+    history_data[today] = today_data
+
+    with open(output_file, "w") as price_file:
+        data = json.dumps(history_data)
+        price_file.write(data)
 
 
 # Get data from specified date
@@ -103,8 +95,10 @@ def trends_analysis(trend_data):
             if date_data is None:
                 trends[location].append("--")
             else:
+                change = "--"
                 if location == "Gjennomsnittspris":
-                    change = round((today_price / date_data.get(location) - 1) * 100, 3)
+                    if date_data.get(location):
+                        change = round((today_price / date_data.get(location) - 1) * 100, 3)
                 else:
                     change = round((today_price / date_data.get(location)[-1] - 1) * 100, 3)
 
@@ -136,11 +130,10 @@ if __name__ == "__main__":
     # Calculate prices on today's data and save to history file
     price_data = load_json(JSON_FILE, PRICE_DATA)
     price_data = calculate_prices(price_data)
-    save_data(price_data, HISTORY_DATA)
+    history_data = extract_history(HISTORY_FILE)
+    save_data(price_data, history_data, HISTORY_FILE)
 
     # Calculate trends
-    history_data = extract_history(HISTORY_DATA)
-    history_data = dict_from_list(history_data)
     days_data = [data_from_date(history_data, 0), data_from_date(history_data, 1),
                  data_from_date(history_data, 7), data_from_date(history_data, 31)]
     trend_data = trends_analysis(days_data)
